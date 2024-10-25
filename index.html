@@ -3,24 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gaming Platform</title>
+    <title>VCloud24 Gaming Platform</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="vgames_logo.png" type="image/png">
     <script type="module" src="index.js"></script>
 </head>
 <body>
     <header>
-        <h1>Welcome to VCloud24 Gaming Platform</h1>
-        <button onclick="window.location.href='https://vcloud24.github.io/look.html'">Help</button>
-        <button id="signInBtn">Sign In</button>
+        <h1>🔥 VCloud24 Gaming Hub 🔥</h1>
+        <div id="user-info">
+            <span id="username">Guest</span>
+            <button id="signInBtn">Sign In</button>
+        </div>
     </header>
-    
-    <div class="game-container">
-        <button id="playAI">Play with AI</button>
-        <button id="playFriend">Play with a Friend</button>
+
+    <section class="game-section">
+        <img src="vgames_logo.png" alt="VGames Logo" class="logo">
+        <h2>Welcome to VCloud24!</h2>
+        <div id="gameLinks" class="hidden">
+            <h3>🎮 Available Games 🎮</h3>
+            <ul>
+                <li><a href="card-matching-game.html">Card-Matching Game</a></li>
+                <li><a href="puzzle-game.html">Puzzle Game</a></li>
+                <li><a href="arcade-game.html">Arcade Game</a></li>
+            </ul>
+        </div>
         <div class="score-box">
-            <h2>Top Scores</h2>
+            <h3>🏆 Top Scores 🏆</h3>
             <ul id="highScoresList"></ul>
         </div>
-    </div>
+    </section>
 </body>
 </html>
