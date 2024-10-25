@@ -1,0 +1,8 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /scores/{scoreId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.resource.data.score > 0;
+    }
+  }
+}
