@@ -1,8 +1,8 @@
+// Import Firebase functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import { getAuth, GithubAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-// Firebase Configuration
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyALeb3KmDnQ9r35ZBJvSYX3tpc4jhaubc4",
     authDomain: "vcloud-d8808.firebaseapp.com",
@@ -15,24 +15,55 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
-// GitHub Sign-In
-const signInBtn = document.getElementById("signInBtn");
-signInBtn.addEventListener("click", () => {
-    const provider = new GithubAuthProvider();
-    signInWithPopup(auth, provider)
-        .then(result => console.log("Signed in as:", result.user.displayName))
-        .catch(error => console.error("Sign-in error:", error));
+// Check user authentication status
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById('username').textContent = user.displayName || user.email;
+        document.getElementById('user-info').classList.remove('hidden');
+        document.getElementById('sign-in-container').classList.add('hidden');
+    } else {
+        document.getElementById('username').textContent = 'Guest';
+        document.getElementById('user-info').classList.add('hidden');
+        document.getElementById('sign-in-container').classList.remove('hidden');
+    }
 });
 
-// Load and Display High Scores
-async function loadHighScores() {
-    const scoresRef = collection(db, "scores");
-    const snapshot = await getDocs(scoresRef);
-    const scores = snapshot.docs.map(doc => doc.data()).sort((a, b) => b.score - a.score).slice(0, 3);
-    const highScoresList = document.getElementById("highScoresList");
-    highScoresList.innerHTML = scores.map(score => `<li>${score.name}: ${score.score}</li>`).join("");
-}
+// Sign up function
+document.getElementById('signUpBtn').addEventListener('click', () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-loadHighScores();
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            console.log('User signed up:', userCredential.user);
+        })
+        .catch((error) => {
+            console.error('Error signing up:', error.message);
+        });
+});
+
+// Sign in function
+document.getElementById('signInBtn').addEventListener('click', () => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            console.log('User signed in:', userCredential.user);
+        })
+        .catch((error) => {
+            console.error('Error signing in:', error.message);
+        });
+});
+
+// Log out function
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    signOut(auth).then(() => {
+        console.log('User signed out');
+    }).catch((error) => {
+        console.error('Error signing out:', error.message);
+    });
+});
