@@ -1,0 +1,33 @@
+body {
+    background: url('C:/Users/Vuyani/OneDrive/Documents/vgames for background.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1em;
+}
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.score-box {
+    margin-top: 1em;
+    padding: 1em;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+}
+button {
+    background-color: #282c34;
+    color: #61dafb;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    margin: 0.5em;
+}
+button:hover {
+    background-color: #20232a;
+}
